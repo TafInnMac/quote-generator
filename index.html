@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quote Generator</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="quote-container" id="quote-container">
+      <!-- Quote -->
+      <div class="quote-text">
+        <i class="fas fa-quote-left"></i>
+        <span id="quote"></span>
+      </div>
+      <!-- Author -->
+      <div class="quote-author">
+        <span id="author"></span>
+      </div>
+      <!-- Buttons -->
+      <div class="button-container">
+        <button id="new-quote">New Quote</button>
+      </div>
+    </div>
+    <!-- Loader -->
+    <div class="loader" id="loader"></div>
+    <!-- <div class="loader" id="loader">  
+        <div></div>
+        <div></div>
+        <div></div>
+    </div> -->
+    <!-- Script -->
+    <body>
+      <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+      <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+
+      <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+
+      <!-- Add Firebase products that you want to use -->
+      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
+    </body>
+    <script src="firebase.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
