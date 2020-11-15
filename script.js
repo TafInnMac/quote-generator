@@ -4,6 +4,8 @@ const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
+const toggleSwitch = document.querySelector('input[type="checkbox"]');
+const toggleIcon = document.getElementById('toggle-id');
 
 function showLoadingSpinner() {
     loader.hidden = false;
@@ -17,8 +19,28 @@ function removeLoadingSpinner() {
     }
 }
 
+function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    toggleIcon.children[0].textContent = `${theme.charAt(0).toUpperCase()}${theme.slice(1)} Mode`;
+    if (theme === 'dark') {
+        toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
+    } else {
+        toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
+    }
+}
+
+function switchTheme(event) {
+    if (event.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        setTheme('dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        setTheme('light');
+    }
+}
+
 function getAllQuotesFromDatabase() {
-    return new Promise(function (resolve, reject) {
+    const quotePromise = new Promise((resolve, reject) => {
         try {
             ref.on("value", function (snapshot) {
                 const array = [];
@@ -35,6 +57,7 @@ function getAllQuotesFromDatabase() {
             reject("No quote found", error);
         }
     })
+    return quotePromise;
 }
 
 function getRandomQuote() {
@@ -54,6 +77,19 @@ function getRandomQuote() {
     });
 }
 
+function checkLocalStorageTheme() {
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+            setTheme(currentTheme);
+        }
+    }
+}
+
+toggleSwitch.addEventListener('change', switchTheme);
 newQuoteBtn.addEventListener('click', getRandomQuote);
 
+checkLocalStorageTheme();
 getRandomQuote();
