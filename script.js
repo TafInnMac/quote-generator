@@ -6,6 +6,7 @@ const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 const toggleSwitch = document.querySelector('input[type="checkbox"]');
 const toggleIcon = document.getElementById('toggle-id');
+const playQuoteBtn = document.getElementById('play-quote');
 
 function showLoadingSpinner() {
     loader.hidden = false;
@@ -74,6 +75,71 @@ function getRandomQuote() {
             quoteText.classList.remove('long-quote');
         }
         quoteText.innerText = randomQuote.quote;
+        // readOutQoute(randomQuote.author, randomQuote.quote);
+    });
+}
+
+function readOutQoute(author, quote) {
+    switch (author) {
+        case 'Chris': {
+            hl = 'bg-bg';
+            v = 'Dimo';
+            r = 0;
+            break;
+        }
+        case 'Osama': {
+            hl = 'en-in';
+            v = 'Ajit';
+            r = 0;
+            break;
+        }
+        case 'Sean': {
+            hl = 'en-ie';
+            v = 'Oran';
+            r = 5;
+            break;
+        }
+        case 'Safa': {
+            hl = 'en-us';
+            v = 'Mike';
+            r = 0;
+            break;
+        }
+        case 'Mehdi': {
+            hl = 'ar-sa';
+            v = 'Salim';
+            r = 0;
+            break;
+        }
+        case 'Sarfraz': {
+            hl = 'ar-sa';
+            v = 'Salim';
+            r = 0;
+            break;
+        }
+        case 'Sean Adams': {
+            hl = 'en-au';
+            v = 'Jack';
+            r = 0;
+            break;
+        }
+        default: {
+            hl = 'en-gb';
+            v = 'Harry'
+            r = 0;
+            break;
+        }
+    }
+
+    VoiceRSS.speech({
+        key: '10314d5dc0d44efc90a9703b3f8382c9',
+        src: quote,
+        hl: hl,
+        v: v,
+        r: r,
+        c: 'mp3',
+        f: '44khz_16bit_stereo',
+        ssml: false
     });
 }
 
@@ -90,6 +156,9 @@ function checkLocalStorageTheme() {
 
 toggleSwitch.addEventListener('change', switchTheme);
 newQuoteBtn.addEventListener('click', getRandomQuote);
+playQuoteBtn.addEventListener('click', () => {
+    readOutQoute(authorText.innerText, quoteText.innerText);
+});
 
 checkLocalStorageTheme();
 getRandomQuote();
