@@ -6,6 +6,7 @@
   --secondary-color: #1b9999;
   --on-primary: rgb(250, 250, 250);
   --on-button-text: rgb(250, 250, 250);
+  --on-button-color: #293f43;
   --on-background: #293f43;
   --on-background-alt: rgba(66, 66, 66, 0.7);
   --background: rgb(255, 255, 255);
@@ -17,7 +18,8 @@
   --primary-variant: #6c63ff;
   --secondary-color: #03dac5;
   --on-primary: #000000;
-  --on-button-text: #293f43;
+  --on-button-text: rgb(250, 250, 250);;
+  --on-button-color: #293f43;
   --on-background: rgba(255, 255, 255, 0.9);
   --on-background-alt: rgba(255, 255, 255, 0.7);
   --background: #1f1f1f;
@@ -84,7 +86,7 @@ button {
   border: none;
   border-radius: 10px;
   color: var(--on-button-text);
-  background: var(--primary-color);
+  background: var(--on-button-color);
   outline: none;
   padding: 0.5rem 1.8rem;
   box-shadow: 0 0.3rem rgba(121, 121, 121, 0.65);
