@@ -174,7 +174,6 @@ button:active {
 .toggle-wrapper {
   display: flex;
   align-items: center;
-  /* flex-direction: column; */
   z-index: 100;
   position: relative;
   right: auto;

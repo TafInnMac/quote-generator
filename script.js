@@ -40,7 +40,6 @@ function setMode(mode, time) {
 
 function toggleMode(event) {
     event.target.checked ? setMode('dark', sunriseSunset.sunrise) : setMode('light', sunriseSunset.sunset);
-    console.log(sunriseSunset);
 }
 
 function getUserLocation() {
@@ -57,6 +56,23 @@ function getUserLocation() {
         }
     })
     return userCoordinatesPromise;
+}
+
+function getSunriseSunsetInfo(lat, long) {
+    const sunriseSunsetInfoPromise = new Promise((resolve, reject) => {
+        try {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`);
+            xhr.send();
+            xhr.onload = () => {
+                const data = JSON.parse(xhr.response);
+                resolve(data);
+            }
+        } catch (error) {
+            reject("Could not get sunrise/sunset info", error);
+        }
+    })
+    return sunriseSunsetInfoPromise;
 }
 
 function isCurrentTimeDayTime(startDateTime, endDateTime) {
@@ -202,23 +218,6 @@ newQuoteBtn.addEventListener('click', () => {
 playQuoteBtn.addEventListener('click', () => {
     readOutQoute(authorText.innerText, quoteText.innerText);
 });
-
-function getSunriseSunsetInfo(lat, long) {
-    const sunriseSunsetInfoPromise = new Promise((resolve, reject) => {
-        try {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`);
-            xhr.send();
-            xhr.onload = () => {
-                const data = JSON.parse(xhr.response);
-                resolve(data);
-            }
-        } catch (error) {
-            reject("Could not get sunrise/sunset info", error);
-        }
-    })
-    return sunriseSunsetInfoPromise;
-}
 
 function init() {
     showLoadingSpinner();
