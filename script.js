@@ -21,7 +21,7 @@ function removeLoadingSpinner() {
 }
 
 function setTheme(theme) {
-    localStorage.setItem('theme', theme);
+    // localStorage.setItem('theme', theme);
     toggleIcon.children[0].textContent = `${theme.charAt(0).toUpperCase()}${theme.slice(1)} Mode`;
     if (theme === 'dark') {
         toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
@@ -38,6 +38,21 @@ function switchTheme(event) {
         document.documentElement.setAttribute('data-theme', 'light');
         setTheme('light');
     }
+}
+
+function getUserLocation() {
+    let userCorodinates = new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(locationData => {
+            resolve(locationData);
+        });
+    })
+    return userCorodinates;
+}
+
+function checkCurrentTime(startDateTime, endDateTime) {
+    let currentTime = dayjs().format();
+    const between = dayjs(currentTime).isBetween(startDateTime, endDateTime);
+    return between;
 }
 
 function getAllQuotesFromDatabase() {
@@ -142,16 +157,16 @@ function readOutQoute(author, quote) {
     });
 }
 
-function checkLocalStorageTheme() {
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        if (currentTheme === 'dark') {
-            toggleSwitch.checked = true;
-            setTheme(currentTheme);
-        }
-    }
-}
+// function checkLocalStorageTheme() {
+//     const currentTheme = localStorage.getItem('theme');
+//     if (currentTheme) {
+//         document.documentElement.setAttribute('data-theme', currentTheme);
+//         if (currentTheme === 'dark') {
+//             toggleSwitch.checked = true;
+//             setTheme(currentTheme);
+//         }
+//     }
+// }
 
 toggleSwitch.addEventListener('change', switchTheme);
 newQuoteBtn.addEventListener('click', getRandomQuote);
@@ -159,5 +174,34 @@ playQuoteBtn.addEventListener('click', () => {
     readOutQoute(authorText.innerText, quoteText.innerText);
 });
 
-checkLocalStorageTheme();
+function getSunriseSunsetInfo(lat, long) {
+    const deets = new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`); // false for synchronous request
+        xhr.send();
+        xhr.onload = () => {
+            const data = JSON.parse(xhr.response);
+            resolve(data);
+        }
+    })
+    return deets;
+}
+
+getUserLocation().then(location => {
+    getSunriseSunsetInfo(location.coords.latitude, location.coords.longitude).then(info => {
+        const isDayTime = checkCurrentTime(info.results.sunrise, info.results.sunset);
+        if (isDayTime) {
+            document.documentElement.setAttribute('data-theme', 'light');
+            setTheme('light');
+            toggleSwitch.checked = false;
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            setTheme('dark');
+            toggleSwitch.checked = true;
+        }
+    });
+});
+
+// checkLocalStorageTheme();
 getRandomQuote();
+

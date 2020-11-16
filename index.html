@@ -11,17 +11,17 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-      <!-- Dark Mode Switch -->
-      <div class="theme-switch-wrapper">
-          <span id="toggle-id">
-              <span class="toggle-text">Light Mode</span>
-              <i class="fas fa-sun"></i>
-          </span>
-          <label class="theme-switch">
-              <input type="checkbox">
-              <div class="slider round"></div>
-          </label>
-      </div>
+    <!-- Dark Mode Switch -->
+    <div class="theme-switch-wrapper">
+      <span id="toggle-id">
+        <span class="toggle-text">Light Mode</span>
+        <i class="fas fa-sun"></i>
+      </span>
+      <label class="theme-switch">
+        <input type="checkbox" />
+        <div class="slider round"></div>
+      </label>
+    </div>
     <div class="quote-container" id="quote-container">
       <!-- Quote -->
       <div class="quote-text">
@@ -47,21 +47,26 @@
     </div> -->
     <!-- Script -->
     <body>
-      <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+      <!-- Rapid API TTS script -->
       <script src="voicerss-tts.min.js"></script>
-
+      <!-- dayjs package -->
+      <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+      <script src="https://unpkg.com/dayjs@1.8.21/plugin/isBetween.js"></script>
+      <script>
+        dayjs.extend(window.dayjs_plugin_isBetween);
+      </script>
+      <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
       <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
       <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
-
       <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
       <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
-
       <!-- Add Firebase products that you want to use -->
       <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
       <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
       <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
+      <script src="firebase.js"></script>
+
+      <script src="script.js"></script>
     </body>
-    <script src="firebase.js"></script>
-    <script src="script.js"></script>
   </body>
 </html>
