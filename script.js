@@ -21,7 +21,7 @@ function removeLoadingSpinner() {
 }
 
 function setTheme(theme) {
-    // localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', theme);
     toggleIcon.children[0].textContent = `${theme.charAt(0).toUpperCase()}${theme.slice(1)} Mode`;
     if (theme === 'dark') {
         toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
@@ -43,7 +43,10 @@ function switchTheme(event) {
 function getUserLocation() {
     let userCorodinates = new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(locationData => {
-            resolve(locationData);
+            resolve(locationData)
+        }, () => {
+            let fallbackLocation = { coords: {latitude: '53.4808', longitude: '2.2426' }};
+            resolve(fallbackLocation);
         });
     })
     return userCorodinates;
@@ -77,20 +80,16 @@ function getAllQuotesFromDatabase() {
 }
 
 function getRandomQuote() {
-    showLoadingSpinner();
-    getAllQuotesFromDatabase().then((quotes) => {
-        let randomIndex = Math.floor(Math.random() * quotes.length);
-        randomQuote = quotes[randomIndex];
-        removeLoadingSpinner();
+    // showLoadingSpinner();
+    let randomQuotePromise = new Promise((resolve, reject) => {
+        getAllQuotesFromDatabase().then((quotes) => {
+            let randomIndex = Math.floor(Math.random() * quotes.length);
+            randomQuote = quotes[randomIndex];
 
-        authorText.innerText = randomQuote.author;
-        if (randomQuote.quote.length > 120) {
-            quoteText.classList.add('long-quote');
-        } else {
-            quoteText.classList.remove('long-quote');
-        }
-        quoteText.innerText = randomQuote.quote;
-    });
+            resolve(randomQuote);
+        });
+    })
+    return randomQuotePromise;
 }
 
 function readOutQoute(author, quote) {
@@ -177,7 +176,7 @@ playQuoteBtn.addEventListener('click', () => {
 function getSunriseSunsetInfo(lat, long) {
     const deets = new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`); // false for synchronous request
+        xhr.open('GET', `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`);
         xhr.send();
         xhr.onload = () => {
             const data = JSON.parse(xhr.response);
@@ -187,6 +186,7 @@ function getSunriseSunsetInfo(lat, long) {
     return deets;
 }
 
+showLoadingSpinner();
 getUserLocation().then(location => {
     getSunriseSunsetInfo(location.coords.latitude, location.coords.longitude).then(info => {
         const isDayTime = checkCurrentTime(info.results.sunrise, info.results.sunset);
@@ -199,9 +199,16 @@ getUserLocation().then(location => {
             setTheme('dark');
             toggleSwitch.checked = true;
         }
+        getRandomQuote().then(quote => {
+            authorText.innerText = quote.author;
+            if (randomQuote.quote.length > 120) {
+                quoteText.classList.add('long-quote');
+            } else {
+                quoteText.classList.remove('long-quote');
+            }
+            quoteText.innerText = quote.quote;
+            removeLoadingSpinner();
+        });
     });
 });
-
-// checkLocalStorageTheme();
-getRandomQuote();
 
