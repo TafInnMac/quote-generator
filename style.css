@@ -164,13 +164,35 @@ button:active {
 .mode-switch-wrapper {
   display: flex;
   align-items: center;
+  flex-direction: column;
   z-index: 100;
   position: fixed;
   right: 2vw;
   top: 3vh;
 }
 
-.mode-switch-wrapper span {
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  /* flex-direction: column; */
+  z-index: 100;
+  position: relative;
+  right: auto;
+  top: auto;
+}
+
+.mode-info {
+  top: 5vh;
+}
+
+.mode-info span {
+  top: 5vh;
+  font-size: 0.75rem;
+  font-style: italic;
+  margin-top: 100px;
+}
+
+.toggle-wrapper span {
   margin-right: 10px;
   font-size: 1rem;
 }

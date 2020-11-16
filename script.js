@@ -1,40 +1,46 @@
 const quoteContainer = document.getElementById('quote-container');
 const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
-const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 const toggleSwitch = document.querySelector('input[type="checkbox"]');
 const toggleIcon = document.getElementById('toggle-id');
 const playQuoteBtn = document.getElementById('play-quote');
+const modeInfoText = document.querySelector('.mode-info');
+const sunriseSunset = {};
 
 function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
+    modeInfoText.hidden = true;
 }
 
 function removeLoadingSpinner() {
     if (!loader.hidden) {
         quoteContainer.hidden = false;
+        modeInfoText.hidden = false;
         loader.hidden = true;
     }
 }
 
-function setMode(mode) {
+function setMode(mode, time) {
     localStorage.setItem('mode', mode);
     toggleIcon.children[0].textContent = `${mode.charAt(0).toUpperCase()}${mode.slice(1)} Mode`;
     document.documentElement.setAttribute('data-mode', mode);
     if (mode === 'dark') {
         toggleSwitch.checked = true;
         toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
+        modeInfoText.children[1].textContent = `Next sunrise is at ${dayjs(time).format('HH:mm:ss')}`;
     } else {
         toggleSwitch.checked = false;
         toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
+        modeInfoText.children[1].textContent = `Next sunset is at ${dayjs(time).format('HH:mm:ss')}`;
     }
 }
 
 function toggleMode(event) {
-    event.target.checked ? setMode('dark') : setMode('light');
+    event.target.checked ? setMode('dark', sunriseSunset.sunrise) : setMode('light', sunriseSunset.sunset);
+    console.log(sunriseSunset);
 }
 
 function getUserLocation() {
@@ -220,11 +226,13 @@ function init() {
         .then(location => {
             getSunriseSunsetInfo(location.coords.latitude, location.coords.longitude)
                 .then(info => {
+                    sunriseSunset.sunrise = info.results.sunrise;
+                    sunriseSunset.sunset = info.results.sunset;
                     const isDayTime = isCurrentTimeDayTime(info.results.sunrise, info.results.sunset);
                     if (isDayTime) {
-                        setMode('light');
+                        setMode('light', info.results.sunset);
                     } else {
-                        setMode('dark');
+                        setMode('dark', info.results.sunrise);
                     }
                     getRandomQuote()
                         .then(quote => {

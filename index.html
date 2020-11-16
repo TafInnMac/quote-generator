@@ -13,14 +13,20 @@
   <body>
     <!-- Dark Mode Switch -->
     <div class="mode-switch-wrapper">
-      <span id="toggle-id">
-        <span class="toggle-text">Light Mode</span>
-        <i class="fas fa-sun"></i>
-      </span>
-      <label class="mode-switch">
-        <input type="checkbox" />
-        <div class="slider round"></div>
-      </label>
+      <div class="toggle-wrapper">
+        <span id="toggle-id">
+          <span class="toggle-text">Light Mode</span>
+          <i class="fas fa-sun"></i>
+        </span>
+        <label class="mode-switch">
+          <input type="checkbox" />
+          <div class="slider round"></div>
+        </label>
+      </div>
+      <div class="mode-info">
+        <i class="fas fa-info-circle"></i>
+        <span></span>
+      </div>
     </div>
     <div class="quote-container" id="quote-container">
       <!-- Quote -->
@@ -34,8 +40,12 @@
       </div>
       <!-- Buttons -->
       <div class="button-container">
-        <button id="play-quote">Listen</button>
-        <button id="new-quote">New Quote</button>
+        <button id="play-quote" title="Listen to quote">
+          <i class="fas fa-play-circle"></i>
+        </button>
+        <button id="new-quote" title="Get another quote">
+          <i class="fas fa-sync-alt"></i>
+        </button>
       </div>
     </div>
     <!-- Loader -->
