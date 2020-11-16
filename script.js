@@ -75,7 +75,6 @@ function getRandomQuote() {
             quoteText.classList.remove('long-quote');
         }
         quoteText.innerText = randomQuote.quote;
-        // readOutQoute(randomQuote.author, randomQuote.quote);
     });
 }
 
@@ -106,8 +105,8 @@ function readOutQoute(author, quote) {
             break;
         }
         case 'Mehdi': {
-            hl = 'ar-sa';
-            v = 'Salim';
+            hl = 'en-in';
+            v = 'Ajit';
             r = 0;
             break;
         }
@@ -132,7 +131,7 @@ function readOutQoute(author, quote) {
     }
 
     VoiceRSS.speech({
-        key: '10314d5dc0d44efc90a9703b3f8382c9',
+        key: key,
         src: quote,
         hl: hl,
         v: v,
