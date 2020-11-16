@@ -13,7 +13,7 @@
   --box-shadow: 0 5px 20px 1px rgba(0, 0, 0, 0.5);
 }
 
-[data-theme="dark"] {
+[data-mode="dark"] {
   --primary-color: rgba(255, 255, 255, 0.7);
   --primary-variant: #6c63ff;
   --secondary-color: #03dac5;
@@ -161,7 +161,7 @@ button:active {
 }
 
 /* Dark Mode Toggle */
-.theme-switch-wrapper {
+.mode-switch-wrapper {
   display: flex;
   align-items: center;
   z-index: 100;
@@ -170,7 +170,7 @@ button:active {
   top: 3vh;
 }
 
-.theme-switch-wrapper span {
+.mode-switch-wrapper span {
   margin-right: 10px;
   font-size: 1rem;
 }
@@ -182,14 +182,14 @@ button:active {
   color: var(--on-background);
 }
 
-.theme-switch {
+.mode-switch {
   display: inline-block;
   height: 34px;
   position: relative;
   width: 60px;
 }
 
-.theme-switch input {
+.mode-switch input {
   display: none;
 }
 
