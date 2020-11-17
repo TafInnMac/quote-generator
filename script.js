@@ -229,7 +229,6 @@ function init() {
                     sunriseSunset.sunrise = info.results.sunrise;
                     sunriseSunset.sunset = info.results.sunset;
                     const isDayTime = isCurrentTimeDayTime(info.results.sunrise, info.results.sunset);
-                    console.log(isDayTime);
                     if (isDayTime) {
                         setMode('light', info.results.sunset);
                     } else {
