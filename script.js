@@ -24,7 +24,7 @@ function removeLoadingSpinner() {
 }
 
 function setMode(mode, time) {
-    localStorage.setItem('mode', mode);
+    // localStorage.setItem('mode', mode);
     toggleIcon.children[0].textContent = `${mode.charAt(0).toUpperCase()}${mode.slice(1)} Mode`;
     document.documentElement.setAttribute('data-mode', mode);
     if (mode === 'dark') {
@@ -78,6 +78,7 @@ function getSunriseSunsetInfo(lat, long) {
 function isCurrentTimeDayTime(startDateTime, endDateTime) {
     let currentTime = dayjs().format();
     const isDayTime = dayjs(currentTime).isBetween(startDateTime, endDateTime);
+    return isDayTime;
 }
 
 function getAllQuotesFromDatabase() {
@@ -228,6 +229,7 @@ function init() {
                     sunriseSunset.sunrise = info.results.sunrise;
                     sunriseSunset.sunset = info.results.sunset;
                     const isDayTime = isCurrentTimeDayTime(info.results.sunrise, info.results.sunset);
+                    console.log(isDayTime);
                     if (isDayTime) {
                         setMode('light', info.results.sunset);
                     } else {
