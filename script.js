@@ -59,20 +59,20 @@ function getUserLocation() {
 }
 
 function getSunriseSunsetInfo(lat, long) {
-    const sunriseSunsetInfoPromise = new Promise((resolve, reject) => {
-        try {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`);
-            xhr.send();
-            xhr.onload = () => {
-                const data = JSON.parse(xhr.response);
-                resolve(data);
+    return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`)
+        .then(response => {
+            if (response.status === 200 && response.status < 300) {
+                return response.json();
+            } else {
+                return response.json()
+                    .then(errorData => {
+                        throw new Error('Could not get sunrise/sunset info.');
+                    });
             }
-        } catch (error) {
-            reject("Could not get sunrise/sunset info", error);
-        }
-    })
-    return sunriseSunsetInfoPromise;
+        }).catch(error => {
+            alert(error);
+            throw new Error('Something went wrong');
+        });
 }
 
 function isCurrentTimeDayTime(startDateTime, endDateTime) {
