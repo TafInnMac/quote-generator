@@ -12,6 +12,6 @@ let firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// firebase.analytics();
 let database = firebase.database();
 let ref = database.ref("quotes");

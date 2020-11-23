@@ -58,21 +58,27 @@ function getUserLocation() {
     return userCoordinatesPromise;
 }
 
-function getSunriseSunsetInfo(lat, long) {
-    return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`)
-        .then(response => {
-            if (response.status === 200 && response.status < 300) {
-                return response.json();
-            } else {
-                return response.json()
-                    .then(errorData => {
-                        throw new Error('Could not get sunrise/sunset info.');
-                    });
-            }
-        }).catch(error => {
-            alert(error);
-            throw new Error('Something went wrong');
-        });
+async function getSunriseSunsetInfo(lat, long) {
+    try {
+        const response = await axios.get(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`);
+        return response.data.results;
+    } catch (error) {
+        alert(error.message);
+    }
+    // return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`)
+    //     .then(response => {
+    //         if (response.status === 200 && response.status < 300) {
+    //             return response.json();
+    //         } else {
+    //             return response.json()
+    //                 .then(errorData => {
+    //                     throw new Error('Could not get sunrise/sunset info.');
+    //                 });
+    //         }
+    //     }).catch(error => {
+    //         alert(error);
+    //         throw new Error('Something went wrong');
+    //     });
 }
 
 function isCurrentTimeDayTime(startDateTime, endDateTime) {
@@ -224,8 +230,8 @@ async function init() {
     showLoadingSpinner();
     const userLocation = await getUserLocation();
     const sunriseSunsetInfo = await getSunriseSunsetInfo(userLocation.coords.latitude, userLocation.coords.longitude);
-    sunriseSunset.sunrise = sunriseSunsetInfo.results.sunrise;
-    sunriseSunset.sunset = sunriseSunsetInfo.results.sunset;
+    sunriseSunset.sunrise = sunriseSunsetInfo.sunrise;
+    sunriseSunset.sunset = sunriseSunsetInfo.sunset;
     const isDayTime = isCurrentTimeDayTime(sunriseSunset.sunrise, sunriseSunset.sunset);
     if (isDayTime) {
         setMode('light', sunriseSunset.sunset);
