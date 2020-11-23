@@ -220,27 +220,41 @@ playQuoteBtn.addEventListener('click', () => {
     readOutQoute(authorText.innerText, quoteText.innerText);
 });
 
-function init() {
+async function init() {
     showLoadingSpinner();
-    getUserLocation()
-        .then(location => {
-            getSunriseSunsetInfo(location.coords.latitude, location.coords.longitude)
-                .then(info => {
-                    sunriseSunset.sunrise = info.results.sunrise;
-                    sunriseSunset.sunset = info.results.sunset;
-                    const isDayTime = isCurrentTimeDayTime(info.results.sunrise, info.results.sunset);
-                    if (isDayTime) {
-                        setMode('light', info.results.sunset);
-                    } else {
-                        setMode('dark', info.results.sunrise);
-                    }
-                    getRandomQuote()
-                        .then(quote => {
-                            updateQuoteContainerText(quote);
-                            removeLoadingSpinner();
-                        });
-                });
-        });
+    const userLocation = await getUserLocation();
+    const sunriseSunsetInfo = await getSunriseSunsetInfo(userLocation.coords.latitude, userLocation.coords.longitude);
+    sunriseSunset.sunrise = sunriseSunsetInfo.results.sunrise;
+    sunriseSunset.sunset = sunriseSunsetInfo.results.sunset;
+    const isDayTime = isCurrentTimeDayTime(sunriseSunset.sunrise, sunriseSunset.sunset);
+    if (isDayTime) {
+        setMode('light', sunriseSunset.sunset);
+    } else {
+        setMode('dark', sunriseSunset.sunrise);
+    }
+    const quote = await getRandomQuote();
+    updateQuoteContainerText(quote);
+    removeLoadingSpinner();
+
+    // getUserLocation()
+    //     .then(location => {
+    //         getSunriseSunsetInfo(location.coords.latitude, location.coords.longitude)
+    //             .then(info => {
+    //                 sunriseSunset.sunrise = info.results.sunrise;
+    //                 sunriseSunset.sunset = info.results.sunset;
+    //                 const isDayTime = isCurrentTimeDayTime(info.results.sunrise, info.results.sunset);
+    //                 if (isDayTime) {
+    //                     setMode('light', info.results.sunset);
+    //                 } else {
+    //                     setMode('dark', info.results.sunrise);
+    //                 }
+    //                 getRandomQuote()
+    //                     .then(quote => {
+    //                         updateQuoteContainerText(quote);
+    //                         removeLoadingSpinner();
+    //                     });
+    //             });
+    //     });
 }
 
 init();
