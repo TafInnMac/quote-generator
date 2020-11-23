@@ -65,20 +65,6 @@ async function getSunriseSunsetInfo(lat, long) {
     } catch (error) {
         alert(error.message);
     }
-    // return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=today&formatted=0`)
-    //     .then(response => {
-    //         if (response.status === 200 && response.status < 300) {
-    //             return response.json();
-    //         } else {
-    //             return response.json()
-    //                 .then(errorData => {
-    //                     throw new Error('Could not get sunrise/sunset info.');
-    //                 });
-    //         }
-    //     }).catch(error => {
-    //         alert(error);
-    //         throw new Error('Something went wrong');
-    //     });
 }
 
 function isCurrentTimeDayTime(startDateTime, endDateTime) {
@@ -233,34 +219,10 @@ async function init() {
     sunriseSunset.sunrise = sunriseSunsetInfo.sunrise;
     sunriseSunset.sunset = sunriseSunsetInfo.sunset;
     const isDayTime = isCurrentTimeDayTime(sunriseSunset.sunrise, sunriseSunset.sunset);
-    if (isDayTime) {
-        setMode('light', sunriseSunset.sunset);
-    } else {
-        setMode('dark', sunriseSunset.sunrise);
-    }
+    isDayTime ? setMode('light', sunriseSunset.sunset) : setMode('dark', sunriseSunset.sunrise);
     const quote = await getRandomQuote();
     updateQuoteContainerText(quote);
     removeLoadingSpinner();
-
-    // getUserLocation()
-    //     .then(location => {
-    //         getSunriseSunsetInfo(location.coords.latitude, location.coords.longitude)
-    //             .then(info => {
-    //                 sunriseSunset.sunrise = info.results.sunrise;
-    //                 sunriseSunset.sunset = info.results.sunset;
-    //                 const isDayTime = isCurrentTimeDayTime(info.results.sunrise, info.results.sunset);
-    //                 if (isDayTime) {
-    //                     setMode('light', info.results.sunset);
-    //                 } else {
-    //                     setMode('dark', info.results.sunrise);
-    //                 }
-    //                 getRandomQuote()
-    //                     .then(quote => {
-    //                         updateQuoteContainerText(quote);
-    //                         removeLoadingSpinner();
-    //                     });
-    //             });
-    //     });
 }
 
 init();
