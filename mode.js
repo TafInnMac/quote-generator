@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Components } from './components.js';
 
 export class Mode {

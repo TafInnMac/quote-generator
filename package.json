@@ -1,0 +1,27 @@
+{
+  "name": "quote-generator",
+  "version": "1.0.0",
+  "description": "Random Qoute Generator",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TafInnMac/quote-generator.git"
+  },
+  "keywords": [
+    "quote",
+    "generator"
+  ],
+  "author": "tafmac",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TafInnMac/quote-generator/issues"
+  },
+  "homepage": "https://github.com/TafInnMac/quote-generator#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.15.0"
+  }
+}

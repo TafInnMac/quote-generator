@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export class SunriseSunset {
      static async getSunriseSunsetInfo(latitude, longitude) {
         try {

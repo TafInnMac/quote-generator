@@ -11,7 +11,7 @@ class App {
         const userLocation = await Location.getUserLocation();
         const sunriseSunsetInfo = await SunriseSunset.getSunriseSunsetInfo(userLocation.coords.latitude, userLocation.coords.longitude);
         const isDayTime = SunriseSunset.isCurrentTimeDayTime(sunriseSunsetInfo.sunrise, sunriseSunsetInfo.sunset);
-        isDayTime ? Mode.setMode('light', sunriseSunsetInfo.sunset) : setMode('dark', sunriseSunsetInfo.sunrise);
+        isDayTime ? Mode.setMode('light', sunriseSunsetInfo.sunset) : Mode.setMode('dark', sunriseSunsetInfo.sunrise);
         const quotes = await Quotes.getAllQuotesFromDatabase();
         const quote = Quotes.getRandomQuote(quotes);
         Quotes.updateQuoteContainerText(quote);

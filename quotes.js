@@ -1,10 +1,12 @@
+/* eslint-disable no-undef */
 import { Components } from './components.js';
+import { Firebase } from './firebase.js';
 
 export class Quotes {
     static getAllQuotesFromDatabase() {
         const quotePromise = new Promise((resolve, reject) => {
             try {
-                ref.on("value", function (snapshot) {
+                Firebase.ref.on("value", (snapshot) => {
                     const array = [];
                     const childData = snapshot.val();
                     for (const key in childData) {
@@ -23,18 +25,8 @@ export class Quotes {
     }
 
     static getRandomQuote(quotes) {
-        // let randomQuotePromise = new Promise((resolve, reject) => {
-            // try {
-                // getAllQuotesFromDatabase()
-                //     .then((quotes) => {
-                const randomIndex = Math.floor(Math.random() * quotes.length);
-                const randomQuote = quotes[randomIndex];
-                // resolve(randomQuote);
-                // });
-            // } catch (error) {
-                // reject(new Error("Could not get random quote"));
-            // }
-        // })
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const randomQuote = quotes[randomIndex];
         return randomQuote;
     }
 
@@ -107,7 +99,9 @@ export class Quotes {
             }
         }
 
+        // eslint-disable-next-line no-undef
         VoiceRSS.speech({
+            // eslint-disable-next-line no-undef
             key: key,
             src: quote,
             hl: hl,
