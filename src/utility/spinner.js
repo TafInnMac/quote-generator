@@ -1,4 +1,4 @@
-import { Components } from './components.js';
+import { Components } from '../app/components.js';
 
 export class Spinner {
     static showLoadingSpinner() {

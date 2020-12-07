@@ -1,9 +1,10 @@
-import { Spinner } from './spinner.js';
-import { Location } from './location.js';
-import { SunriseSunset } from './sunrise-sunset.js';
-import { Mode } from './mode.js';
-import { Quotes } from './quotes.js';
-import { Components } from './components.js';
+import { Spinner } from './utility/spinner.js';
+import { Location } from './utility/location.js';
+import { SunriseSunset } from './utility/sunrise-sunset.js';
+import { Mode } from './utility/mode.js';
+import { Quotes } from './utility/quotes.js';
+import { Components } from './app/components.js';
+import regeneratorRuntime from "regenerator-runtime";
 
 class App {
     static async init() {
@@ -14,14 +15,14 @@ class App {
         isDayTime ? Mode.setMode('light', sunriseSunsetInfo.sunset) : Mode.setMode('dark', sunriseSunsetInfo.sunrise);
         const quotes = await Quotes.getAllQuotesFromDatabase();
         const quote = Quotes.getRandomQuote(quotes);
-        Quotes.updateQuoteContainerText(quote);
+        Components.updateQuoteContainerText(quote);
         Spinner.removeLoadingSpinner();
 
         Components.toggleSwitch.addEventListener('change', () => {
-            Mode.toggleMode(event, sunriseSunsetInfo)
+            Mode.toggleMode(event, sunriseSunsetInfo);
         });
         Components.newQuoteBtn.addEventListener('click', () => {
-            Quotes.updateQuoteContainerText(Quotes.getRandomQuote(quotes));
+            Components.updateQuoteContainerText(Quotes.getRandomQuote(quotes));
         });
         Components.playQuoteBtn.addEventListener('click', () => {
             Quotes.readOutQoute(Components.authorText.innerText, Components.quoteText.innerText);

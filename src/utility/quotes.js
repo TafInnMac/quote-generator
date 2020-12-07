@@ -1,6 +1,6 @@
-/* eslint-disable no-undef */
-import { Components } from './components.js';
+// import { Components } from '../app/components.js';
 import { Firebase } from './firebase.js';
+// import * as Voice from './voicerss-tts.min.js'
 
 export class Quotes {
     static getAllQuotesFromDatabase() {
@@ -30,15 +30,15 @@ export class Quotes {
         return randomQuote;
     }
 
-    static updateQuoteContainerText(randomQuote) {
-        Components.authorText.innerText = randomQuote.author;
-        if (randomQuote.quote.length > 120) {
-            Components.quoteText.classList.add('long-quote');
-        } else {
-            Components.quoteText.classList.remove('long-quote');
-        }
-        Components.quoteText.innerText = randomQuote.quote;
-    }
+    // static updateQuoteContainerText(randomQuote) {
+    //     Components.authorText.innerText = randomQuote.author;
+    //     if (randomQuote.quote.length > 120) {
+    //         Components.quoteText.classList.add('long-quote');
+    //     } else {
+    //         Components.quoteText.classList.remove('long-quote');
+    //     }
+    //     Components.quoteText.innerText = randomQuote.quote;
+    // }
 
     static readOutQoute(author, quote) {
         let hl, v, r;
@@ -99,17 +99,17 @@ export class Quotes {
             }
         }
 
-        // eslint-disable-next-line no-undef
-        VoiceRSS.speech({
-            // eslint-disable-next-line no-undef
-            key: key,
-            src: quote,
-            hl: hl,
-            v: v,
-            r: r,
-            c: 'mp3',
-            f: '44khz_16bit_stereo',
-            ssml: false
-        });
+        import('./voicerss-tts.min.js').then(voice => {
+            voice.VoiceRSS.speech({
+                key: voice.key,
+                src: quote,
+                hl: hl,
+                v: v,
+                r: r,
+                c: 'mp3',
+                f: '44khz_16bit_stereo',
+                ssml: false
+            });
+        })
     }
 }
